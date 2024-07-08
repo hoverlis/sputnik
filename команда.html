@@ -80,7 +80,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Прозрачная таблица с категориями и описанием</title>
-    <style>
+    <st<style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -88,136 +88,129 @@
             background-color: #f0f0f0;
         }
         .table-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
         table {
             width: 100%;
-            border-collapse: collapse;
+            max-width: 1200px;
+            border-collapse: separate;
+            border-spacing: 15px; /* Расстояние между ячейками */
             background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         td {
+            text-align: center;
             vertical-align: top;
-            padding: 10px;
         }
-        .description {
-            padding: 20px;
-            width: 90%; /* ширина колонки с описанием */
+        .image-container {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
         }
-        .catalog {
-            width: 800px;
-            height: 500px;
-            background-color: #e0e0e0;
-            padding: 10px;
-            box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .catalog-content {
+        .image-container img {
             width: 100%;
             height: 100%;
-            background-color: #cfcfcf;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            object-fit: cover;
         }
-        .category-title {
-            font-weight: bold;
+        .description {
+            font-size: 20px;
+            color: #333;
+        }
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+            td {
+                display: block;
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            tr {
+                display: flex;
+                flex-direction: column;
+            }
+            .image-container {
+                height: 200px;
+            }
+            .description {
+                font-size: 18px;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .table-container {
+                padding: 0;
+            }
+            table {
+                border-spacing: 8px; /* Уменьшаем расстояние между ячейками */
+                padding: 10px;
+            }
+            .image-container {
+                height: 150px;
+            }
+            .description {
+                font-size: 16px;
+            }
         }
     </style>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f0f0f0;
-    }
-    .table-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    table {
-        border-collapse: separate;
-        border-spacing: 15px; /* Расстояние между ячейками */
-        background: rgba(255, 255, 255, 0.7);
-        border-radius: 8px;
-        overflow: hidden;
-        padding: 20px;
-    }
-    td {
-        text-align: center;
-        vertical-align: top;
-    }
-    .image-container {
-        width: 500px;
-        height: 400px;
-        overflow: hidden;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-    }
-    .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .description {
-        font-size: 20px;
-        color: #333;
-    }
-</style>
 </head>
 <body>
-<div class="table-container">
-    <table>
-        <tr>
-            <td>
-                <div class="image-container">
-                     <img src="оля.jpg" alt="Person 1">
+    <div class="table-container">
+        <table>
+            <tr>
+                <td>
+                    <div class="image-container">
+                        <img src="оля.jpg" alt="Person 1">
                     </div>
                     <div class="description">
-                    Кутузова Ольга Владимировна
-                    <p>Разработчик информационного ресурса</p>
-                </div>
-            </td>
-            <td>
-                <div class="image-container">
-                    <img src="таня.jpg" alt="Person 2">
-                </div>
-                <div class="description">
-                    Енбаева Татьяна Игоревна
-                    <p>Занималась обработкой снимков</p>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="image-container">
-                    <img src="айсен.jpg" alt="Person 3">
-                </div>
-                <div class="description">
-                    Васильев Айсен Александрович
-                    <p>Занимался обработкой снимков</p>
-                </div>
-            </td>
-            <td>
-                <div class="image-container">
-                    <img src="полина.jpg" alt="Person 4">
-                </div>
-                <div class="description">
-                    Павлова Полина Леонидовна
-                    <p>Занималась обработкой снимков</p>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
+                        Кутузова Ольга Владимировна
+                        <p>Разработчик информационного ресурса</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="image-container">
+                        <img src="таня.jpg" alt="Person 2">
+                    </div>
+                    <div class="description">
+                        Енбаева Татьяна Игоревна
+                        <p>Занималась обработкой снимков</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="image-container">
+                        <img src="айсен.jpg" alt="Person 3">
+                    </div>
+                    <div class="description">
+                        Васильев Айсен Александрович
+                        <p>Занимался обработкой снимков</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="image-container">
+                        <img src="полина.jpg" alt="Person 4">
+                    </div>
+                    <div class="description">
+                        Павлова Полина Леонидовна
+                        <p>Занималась обработкой снимков</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 <head>
     <meta charset="UTF-8">
