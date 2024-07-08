@@ -74,25 +74,46 @@
 <center><h1>Что это?<h1></center>
 </body>
 <h1>Данный ресурс разрабатывается в рамках Научно-технологического проекта "Большие Вызовы"</h1>
-<style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стилизованная кнопка</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         .center-container {
             display: flex;
+            flex-direction: column; /* Размещаем элементы вертикально */
             justify-content: center;
             align-items: center;
             height: 100vh; /* Высота контейнера */
+            text-align: center; /* Выравнивание текста */
         }
         .catalog-button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            background-color: #87CEEB; /* Голубой цвет */
+            color: white;
+            border: none;
+            border-radius: 8px; /* Закругленные углы */
+            font-family: 'Roboto', sans-serif; /* Шрифт */
+            font-weight: 700; /* Жирный */
+            transition: background-color 0.3s;
+            margin-top: 20px; /* Отступ сверху для кнопки */
+        }
+        .catalog-button:hover {
+            background-color: #63B8FF; /* Изменение цвета при наведении */
         }
     </style>
 </head>
 <body>
     <div class="center-container">
+        <p>Текст над кнопкой</p>
         <button class="catalog-button">Перейти в каталог</button>
     </div>
 </body>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Футер с Контактами</title>
