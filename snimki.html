@@ -1,0 +1,61 @@
+html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Таблица с изображением и текстом</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        td {
+            vertical-align: top;
+            padding: 10px;
+        }
+        .image-cell img {
+            width: 512px; /* Ширина изображения */
+            height: auto;
+            border-radius: 8px;
+        }
+        .text-cell {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- Вставляем содержимое через PHP -->
+        <?php
+        $data = json_decode(file_get_contents('data.json'), true);
+        if ($data) {
+            echo "<table>
+                <tr>
+                    <td class='image-cell'>
+                        <img src='{$data['image']}' alt='Спутниковый снимок'>
+                    </td>
+                    <td class='text-cell'>
+                        <h2>{$data['title']}</h2>
+                        <p>{$data['description']}</p>
+                    </td>
+                </tr>
+            </table>";
+        } else {
+            echo "<p>Данные отсутствуют.</p>";
+        }
+        ?>
+    </div>
+</body>
+</html>
