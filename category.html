@@ -72,7 +72,10 @@
 </div>
 </body>
 </head>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -97,7 +100,6 @@
         }
 
         td {
-            vertical-align: top;
             padding: 20px;
         }
 
@@ -142,10 +144,22 @@
             text-decoration: underline;
             margin-bottom: 10px;
         }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
     </style>
     <title>Data Input Form</title>
 </head>
-
 <body>
     <div class="form-container">
         <h2>Добавить новую запись</h2>
@@ -171,16 +185,21 @@
             <!-- New entries will be added here -->
         </table>
     </div>
-    <body>
-        <div class="table-container">
-            <table>
-                <tr>
-                    <td class="description">
-                        <a href="gok.html"><h2>Горно-обогатительные комбинаты</h2></a>
-                        <p>Го́рно-обогати́тельный комбина́т (сокращённо ГОК) — комплексное горное предприятие по добыче и переработке твёрдых полезных ископаемых. Необходимость в строительстве на одной производственной площадке производственных переделов не только по добыче, но и по переработке и обогащению добываемых из недр полезных ископаемых, возникла в связи с тем, что для дальнейшего использования полезных ископаемых необходимо повысить в них содержание полезных компонентов.</p>
-                    </td>
-                </tr>
-                <tr>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <td class="description">
+                    <a href="gok.html"><h2>Горно-обогатительные комбинаты</h2></a>
+                    <p>Го́рно-обогати́тельный комбина́т (сокращённо ГОК) — комплексное горное предприятие по добыче и переработке твёрдых полезных ископаемых. Необходимость в строительстве на одной производственной площадке производственных переделов не только по добыче, но и по переработке и обогащению добываемых из недр полезных ископаемых, возникла в связи с тем, что для дальнейшего использования полезных ископаемых необходимо повысить в них содержание полезных компонентов.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="image-container">
+                    <img src="GOK_Sorsky.png" alt="Горно-обогатительный комбинат">
+                </td>
+            </tr>
+        </table>
                     <td class="image-container">
                         <img src="GOK_Sorsky.png" alt="Горно-обогатительный комбинат">
                     </td>
