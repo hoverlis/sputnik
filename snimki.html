@@ -14,7 +14,7 @@ html
         table {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             border-collapse: collapse;
             background: rgba(255, 255, 255, 0.8);
@@ -39,25 +39,40 @@ html
     <div id="dataContainer"></div>
 
     <script>
-        const data = JSON.parse(localStorage.getItem('satelliteData'));
-
-        if (data) {
-            const table = document.createElement('table');
-            table.innerHTML = `
-                <tr>
-                    <td class="image-cell">
-                        <img src="${data.image}" alt="Спутниковый снимок">
-                    </td>
-                    <td class="text-cell">
-                        <h2>${data.title}</h2>
-                        <p>${data.description}</p>
-                    </td>
-                </tr>
-            `;
-            document.getElementById('dataContainer').appendChild(table);
-        } else {
-            document.getElementById('dataContainer').innerHTML = '<p>Данные отсутствуют.</p>';
+        function renderData(dataArray) {
+            const container = document.getElementById('dataContainer');
+            container.innerHTML = '';
+            dataArray.forEach(data => {
+                const table = document.createElement('table');
+                table.innerHTML = `
+                    <tr>
+                        <td class="image-cell">
+                            <img src="${data.image}" alt="Спутниковый снимок">
+                        </td>
+                        <td class="text-cell">
+                            <h2>${data.title}</h2>
+                            <p>${data.description}</p>
+                        </td>
+                    </tr>
+                `;
+                container.appendChild(table);
+            });
         }
+
+        function saveData(newData) {
+            let dataArray = JSON.parse(localStorage.getItem('satelliteData')) || [];
+            dataArray.push(newData);
+            localStorage.setItem('satelliteData', JSON.stringify(dataArray));
+            renderData(dataArray);
+        }
+
+        const newData = {
+            image: 'your-image-url.jpg',
+            title: 'New Satellite Image',
+            description: 'Description of the new satellite image.'
+        };
+
+        saveData(newData);
     </script>
 </body>
 </html>
