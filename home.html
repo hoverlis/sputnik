@@ -5,87 +5,7 @@ html
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Каталог эталонов дешифрования спутниковых снимков</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .topnav {
-            overflow: hidden;
-            background-color: #333;
-        }
-
-        .topnav a {
-            float: left;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .topnav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .topnav a.active {
-            background-color: #193d64;
-            color: white;
-        }
-
-        .header {
-            background-image: url('https://bogatyr.club/uploads/posts/2023-03/1677740356_bogatyr-club-p-zemlya-s-orbiti-foni-krasivo-68.jpg'); /* Укажите путь к изображению земли */
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 30px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        td {
-            vertical-align: top;
-            padding: 10px;
-        }
-
-        .image-cell img {
-            width: 512px;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .text-cell {
-            padding-left: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="topnav">
@@ -112,62 +32,7 @@ html
     </div>
 
     <div id="dataContainer"></div>
-
-    <script>
-        document.getElementById('dataForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-            const imageInput = document.getElementById('image').files[0];
-
-            if (imageInput) {
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    const image = e.target.result;
-
-                    const newData = {
-                        title: title,
-                        description: description,
-                        image: image
-                    };
-
-                    let dataArray = JSON.parse(localStorage.getItem('satelliteData')) || [];
-                    dataArray.push(newData);
-                    localStorage.setItem('satelliteData', JSON.stringify(dataArray));
-
-                    alert('Данные сохранены!');
-                    renderData(dataArray);
-                }
-                reader.readAsDataURL(imageInput);
-            }
-        });
-
-        function renderData(dataArray) {
-            const container = document.getElementById('dataContainer');
-            container.innerHTML = '';
-            dataArray.forEach(data => {
-                const table = document.createElement('table');
-                table.innerHTML = `
-                    <tr>
-                        <td class="image-cell">
-                            <img src="${data.image}" alt="Спутниковый снимок">
-                        </td>
-                        <td class="text-cell">
-                            <h2>${data.title}</h2>
-                            <p>${data.description}</p>
-                        </td>
-                    </tr>
-                `;
-                container.appendChild(table);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            let dataArray = JSON.parse(localStorage.getItem('satelliteData')) || [];
-            renderData(dataArray);
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
