@@ -17,7 +17,7 @@ html
             margin: 0 auto;
             padding: 20px;
             border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -26,7 +26,7 @@ html
             padding: 10px;
         }
         .image-cell img {
-            width: 512px; /* Ширина изображения */
+            width: 512px;
             height: auto;
             border-radius: 8px;
         }
@@ -36,26 +36,28 @@ html
     </style>
 </head>
 <body>
-    <div>
-        <!-- Вставляем содержимое через PHP -->
-        <?php
-        $data = json_decode(file_get_contents('data.json'), true);
-        if ($data) {
-            echo "<table>
+    <div id="dataContainer"></div>
+
+    <script>
+        const data = JSON.parse(localStorage.getItem('satelliteData'));
+
+        if (data) {
+            const table = document.createElement('table');
+            table.innerHTML = `
                 <tr>
-                    <td class='image-cell'>
-                        <img src='{$data['image']}' alt='Спутниковый снимок'>
+                    <td class="image-cell">
+                        <img src="${data.image}" alt="Спутниковый снимок">
                     </td>
-                    <td class='text-cell'>
-                        <h2>{$data['title']}</h2>
-                        <p>{$data['description']}</p>
+                    <td class="text-cell">
+                        <h2>${data.title}</h2>
+                        <p>${data.description}</p>
                     </td>
                 </tr>
-            </table>";
+            `;
+            document.getElementById('dataContainer').appendChild(table);
         } else {
-            echo "<p>Данные отсутствуют.</p>";
+            document.getElementById('dataContainer').innerHTML = '<p>Данные отсутствуют.</p>';
         }
-        ?>
-    </div>
+    </script>
 </body>
 </html>
