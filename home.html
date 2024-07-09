@@ -25,7 +25,7 @@ html
 <body>
     <div class="container">
         <h2>Добавить новый спутниковый снимок</h2>
-        <form action="save_data.php" method="POST" enctype="multipart/form-data">
+        <form id="dataForm">
             <label for="title">Заголовок:</label><br>
             <input type="text" id="title" name="title" required><br><br>
             <label for="description">Описание:</label><br>
@@ -35,5 +35,33 @@ html
             <input type="submit" value="Сохранить">
         </form>
     </div>
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const imageInput = document.getElementById('image').files[0];
+
+            if (imageInput) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const image = e.target.result;
+
+                    const data = {
+                        title: title,
+                        description: description,
+                        image: image
+                    };
+
+                    localStorage.setItem('satelliteData', JSON.stringify(data));
+                    alert('Данные сохранены!');
+                    window.location.href = 'snimki.html';
+                }
+                reader.readAsDataURL(imageInput);
+            }
+        });
+    </script>
 </body>
 </html>
