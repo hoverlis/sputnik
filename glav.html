@@ -1,54 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-        }
-        
-        .topnav {
-          overflow: hidden;
-          background-color: #333;
-        }
-        
-        .topnav a {
-          float: left;
-          color: #f2f2f2;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-          font-size: 17px;
-        }
-        
-        .topnav a:hover {
-          background-color: #ddd;
-          color: black;
-        }
-        
-        .topnav a.active {
-          background-color: #193d64;
-          color: white;
-        }
-        </style>
-        </head>
-        <body>
-        
-        
-        <div class="topnav">
-          <a class="active" href="glav.html">Главная</a>
-          <a href="snimki1.html">Каталог снимков</a>
-          <a href="команда.html">Команда</a>
-          
-        </div>
-        </style>
 <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
+        
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .topnav a.active {
+            background-color: #193d64;
+            color: white;
+        }
+
         .header {
             background-image: url('спутник.jpg'); /* Укажите путь к изображению земли */
             background-size: cover;
@@ -57,38 +38,11 @@
             text-align: center;
             padding: 100px 20px;
         }
+        
         .header h1 {
             margin: 0;
             font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-    </style>
-</head>
-
-<body>
-<div class="header">
-    <h1>Каталог эталонов дешифрования спутниковых снимков для оценки экологического состояния</h1>
-</div>
-</body>
-<body>
-<center><h1>Что это?<h1></center>
-</body>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-image: url('1rкосмос.jpg'); /* Замените на URL фоновой картинки */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* Фиксированный фон */
-            color: white;
         }
 
         .center-container {
@@ -96,12 +50,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 75vh; /* Высота контейнера */
+            height: 100vh; /* Высота контейнера */
             text-align: center; /* Выравнивание текста */
-            padding-left: 20%;
-            padding-right: 20%;
+            font-weight: 700;
+            padding: 10%;
+        }
 
-            
+        .center-container h2 {
+            margin-top: 20px; /* Отступ сверху */
+            margin-bottom: 10px; /* Отступ снизу */
+            font-size: 2em;
+        }
+
+        .center-container p {
+            margin: 0;
+            padding: 0;
+            max-width: 800px; /* Максимальная ширина текста */
+            font-size: 1.2em;
+            line-height: 1.4;
         }
 
         .catalog-button {
@@ -121,16 +87,56 @@
         .catalog-button:hover {
             background-color: #63B8FF; /* Изменение цвета при наведении */
         }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 50px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .center-container {
+                padding: 5%;
+            }
+
+            .center-container h2 {
+                font-size: 1.5em;
+            }
+
+            .center-container p {
+                font-size: 1em;
+            }
+
+            .catalog-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="topnav">
+        <a class="active" href="glav.html">Главная</a>
+        <a href="snimki1.html">Каталог снимков</a>
+        <a href="команда.html">Команда</a>
+    </div>
+
+    <div class="header">
+        <h1>Каталог эталонов дешифрования спутниковых снимков для оценки экологического состояния</h1>
+    </div>
+
     <div class="center-container">
-        <p><h2>Данный ресурс разрабатывается в рамках Научно-технологического проекта "Большие Вызовы". 
+        <h2>Что это?</h2>
+        <p>Данный ресурс разрабатывается в рамках Научно-технологического проекта "Большие Вызовы". 
            Добро пожаловать на наш сайт, предназначенный для анализа и интерпретации спутниковых данных. 
            Мы предлагаем обширный каталог эталонов дешифрования спутниковых снимков, который станет незаменимым инструментом для геологов, 
-           экологов, картографов, а также всех, кто работает с дистанционным зондированием Земли.</h2></p>
+           экологов, картографов, а также всех, кто работает с дистанционным зондированием Земли.</p>
         <a href="snimki1.html" class="catalog-button">Перейти в каталог</a>
     </div>
+</body>
+
 </body>
             
     </div>
