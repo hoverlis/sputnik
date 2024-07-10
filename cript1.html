@@ -1,0 +1,40 @@
+html
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Каталог эталонов дешифрования спутниковых снимков</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="topnav">
+            <a class="active" href="#">Главная</a>
+            <a href="snimki.html">Каталог снимков</a>
+            <a href="команда.html">Команда</a>
+        </div>
+
+        <div class="header">
+            <h1>Каталог эталонов дешифрования спутниковых снимков для оценки экологического состояния</h1>
+        </div>
+
+        <div class="container">
+            <h2>Добавить новый спутниковый снимок</h2>
+            <form id="dataForm">
+                <label for="title">Заголовок:</label><br>
+                <input type="text" id="title" name="title" required><br><br>
+                <label for="description">Описание:</label><br>
+                <textarea id="description" name="description" rows="4" required></textarea><br><br>
+                <label for="image">Изображение:</label><br>
+                <input type="file" id="image" name="image" accept="image/*" required><br><br>
+                <input type="submit" value="Сохранить">
+            </form>
+        </div>
+
+        <div id="dataContainer"></div>
+        <button id="downloadBtn">Скачать данные</button>
+
+        <script src="cript.js"></script>
+    </body>
+    </html>
+    
