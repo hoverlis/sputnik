@@ -1,3 +1,5 @@
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -8,12 +10,12 @@
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
         }
-
+        
         .topnav {
             overflow: hidden;
             background-color: #333;
         }
-
+        
         .topnav a {
             float: left;
             color: #f2f2f2;
@@ -22,17 +24,17 @@
             text-decoration: none;
             font-size: 17px;
         }
-
+        
         .topnav a:hover {
             background-color: #ddd;
             color: black;
         }
-
+        
         .topnav a.active {
             background-color: #193d64;
             color: white;
         }
-
+        
         .header {
             background-image: url('https://bogatyr.club/uploads/posts/2023-03/1677740356_bogatyr-club-p-zemlya-s-orbiti-foni-krasivo-68.jpg');
             background-size: cover;
@@ -41,13 +43,13 @@
             text-align: center;
             padding: 100px 20px;
         }
-
+        
         .header h1 {
             margin: 0;
             font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-
+        
         .catalog {
             max-width: 800px;
             margin: 20px auto;
@@ -56,25 +58,25 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
+        
         .catalog-item {
             margin-bottom: 20px;
         }
-
+        
         .catalog-item h2 {
             font-size: 1.5em;
         }
-
+        
         .catalog-item p {
             margin: 10px 0;
         }
-
+        
         .catalog-item img {
             width: 100%;
             height: auto;
             border-radius: 8px;
         }
-
+        
         .btn {
             background-color: #193d64;
             border: none;
@@ -88,16 +90,15 @@
             cursor: pointer;
             border-radius: 4px;
         }
-
+        
         .btn:hover {
             background-color: #15518c;
         }
-
+        
         @media (max-width: 600px) {
             .header h1 {
                 font-size: 1.5em;
             }
-
             .catalog {
                 padding: 10px;
             }
@@ -133,39 +134,64 @@
     <div id="dataContainer" class="catalog"></div>
 
     <script>
-        document.getElementById('dataForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function () {
+            loadData();
 
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-            const image = document.getElementById('image').files[0];
-            const reader = new FileReader();
+            document.getElementById('dataForm').addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            reader.onload = function (e) {
-                const catalogItem = document.createElement('div');
-                catalogItem.className = 'catalog-item';
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const image = document.getElementById('image').files[0];
+                const reader = new FileReader();
 
-                const h2 = document.createElement('h2');
-                h2.innerText = title;
-                catalogItem.appendChild(h2);
+                reader.onload = function (e) {
+                    const catalogItem = {
+                        title: title,
+                        description: description,
+                        imageSrc: e.target.result
+                    };
+                    saveData(catalogItem);
+                    addCatalogItem(catalogItem);
+                };
 
-                const p = document.createElement('p');
-                p.innerText = description;
-                catalogItem.appendChild(p);
-
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                catalogItem.appendChild(img);
-
-                document.getElementById('dataContainer').appendChild(catalogItem);
-            }
-
-            reader.readAsDataURL(image);
+                reader.readAsDataURL(image);
+            });
         });
+
+        function addCatalogItem(catalogItem) {
+            const container = document.getElementById('dataContainer');
+            const div = document.createElement('div');
+            div.className = 'catalog-item';
+
+            const h2 = document.createElement('h2');
+            h2.innerText = catalogItem.title;
+            div.appendChild(h2);
+
+            const p = document.createElement('p');
+            p.innerText = catalogItem.description;
+            div.appendChild(p);
+
+            const img = document.createElement('img');
+            img.src = catalogItem.imageSrc;
+            div.appendChild(img);
+
+            container.appendChild(div);
+        }
+
+        function saveData(catalogItem) {
+            let data = JSON.parse(localStorage.getItem('catalogData')) || [];
+            data.push(catalogItem);
+            localStorage.setItem('catalogData', JSON.stringify(data));
+        }
+
+        function loadData() {
+            const data = JSON.parse(localStorage.getItem('catalogData')) || [];
+            data.forEach(item => {
+                addCatalogItem(item);
+            });
+        }
     </script>
-</body>
-</html>
-    </body>
 
     <style>
         body {
