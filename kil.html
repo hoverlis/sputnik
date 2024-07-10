@@ -1,0 +1,172 @@
+html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        td {
+            padding: 20px;
+        }
+
+        .image-cell img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+    <title>Каталог эталонов дешифрования спутниковых снимков</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Каталог эталонов дешифрования спутниковых снимков для оценки экологического состояния</h1>
+    </div>
+
+    <div class="container">
+        <h2>Добавить новый спутниковый снимок</h2>
+        <form id="dataForm">
+            <label for="title">Заголовок:</label><br>
+            <input type="text" id="title" name="title" required><br><br>
+            <label for="description">Описание:</label><br>
+            <textarea id="description" name="description" rows="4" required></textarea><br><br>
+            <label for="image">Изображение:</label><br>
+            <input type="file" id="image" name="image" accept="image/*" required><br><br>
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
+
+    <div id="dataContainer"></div>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const imageInput = document.getElementById('image').files[0];
+
+            if (imageInput) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const image = e.target.result;
+                    const newData = {
+                        title: title,
+                        description: description,
+                        image: image,
+                    };
+
+                    addDataToPage(newData);
+                    saveDataToLocalStorage(newData);
+                    generateHtmlPage(newData);
+                };
+                reader.readAsDataURL(imageInput);
+            }
+        });
+
+        function addDataToPage(data) {
+            const container = document.getElementById('dataContainer');
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <tr>
+                    <td class="image-cell">
+                        <img src="${data.image}" alt="Спутниковый снимок">
+                    </td>
+                    <td class="text-cell">
+                        <h2><a href="${data.title}.html">${data.title}</a></h2>
+                        <p>${data.description}</p>
+                    </td>
+                </tr>
+            `;
+            container.appendChild(table);
+        }
+
+        function saveDataToLocalStorage(data) {
+            const existingData = JSON.parse(localStorage.getItem('dataList')) || [];
+            existingData.push(data);
+            localStorage.setItem('dataList', JSON.stringify(existingData));
+        }
+
+        function loadDataFromLocalStorage() {
+            const existingData = JSON.parse(localStorage.getItem('dataList')) || [];
+            existingData.forEach(data => addDataToPage(data));
+        }
+
+        function generateHtmlPage(data) {
+            const pageContent = `
+                <!DOCTYPE html>
+                <html lang="ru">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${data.title}</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            background-color: #f0f0f0;
+                        }
+                        .container {
+                            width: 100%;
+                            max-width: 800px;
+                            margin: auto;
+                            background: rgba(255, 255, 255, 0.8);
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        }
+                        .image-cell img {
+                            max-width: 100%;
+                            height: auto;
+                            border-radius: 8px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>${data.title}</h1>
+                        <img src="${data.image}" alt="Спутниковый снимок">
+                        <p>${data.description}</p>
+                    </div>
+                </body>
+                </html>`;
+
+            const link = document.createElement('a');
+            link.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(pageContent);
+            link.download = `${data.title}.html`;
+            link.click();
+        }
+
+        // При загрузке страницы загружаем данные из Local Storage
+        window.onload = function() {
+            loadDataFromLocalStorage();
+        };
+    </script>
+</body>
+</html>
