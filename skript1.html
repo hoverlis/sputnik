@@ -139,3 +139,59 @@
             reader.readAsDataURL(image);
         });
     </script>
+    </body>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1; /* Контент будет расширяться, чтобы занять всё доступное пространство */
+        }
+
+        .footer {
+            background-image: url('https://bogatyr.club/uploads/posts/2023-03/1677740356_bogatyr-club-p-zemlya-s-orbiti-foni-krasivo-68.jpg'); /* Укажите путь к изображению Земли */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer h2 {
+            margin-top: 0;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer-overlay {
+            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный слой */
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- Основное содержание страницы -->
+    </div>
+
+    <div class="footer">
+        <div class="footer-overlay">
+            <h2>Контакты</h2>
+            <p>Адрес: 354340, Российская Федерация, Краснодарский край, федеральная территория «Сириус», пгт. Сириус, Олимпийский пр., д. 1.</p>
+        
+            <p>Email: ketchich@gmail.com</p>
+        </div>
+    </div>
+</body>
