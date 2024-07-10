@@ -1,6 +1,6 @@
 html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,162 +11,108 @@ html
             padding: 20px;
             background-color: #f0f0f0;
         }
-
-        .container {
+        .table-container {
             width: 100%;
             max-width: 800px;
             margin: 20px auto;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             background: rgba(255, 255, 255, 0.7);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            margin-top: 20px;
         }
-
         td {
+            vertical-align: top;
             padding: 20px;
         }
-
-        .image-cell img {
-            max-width: 100%;
-            height: auto;
+        .description {
+            padding: 10px;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
             border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
         }
     </style>
-    <title>Каталог эталонов дешифрования спутниковых снимков</title>
+    <title>Data Input Form</title>
 </head>
 <body>
-    <div class="header">
-        <h1>Каталог эталонов дешифрования спутниковых снимков для оценки экологического состояния</h1>
-    </div>
-
-    <div class="container">
-        <h2>Добавить новый спутниковый снимок</h2>
+    <div class="form-container">
+        <h2>Добавить новую запись</h2>
         <form id="dataForm">
-            <label for="title">Заголовок:</label><br>
-            <input type="text" id="title" name="title" required><br><br>
-            <label for="description">Описание:</label><br>
-            <textarea id="description" name="description" rows="4" required></textarea><br><br>
-            <label for="image">Изображение:</label><br>
-            <input type="file" id="image" name="image" accept="image/*" required><br><br>
-            <input type="submit" value="Сохранить">
+            <label for="title">Заголовок:</label>
+            <input type="text" id="title" required>
+            
+            <label for="link">Ссылка:</label>
+            <input type="text" id="link">
+            
+            <label for="description">Описание:</label>
+            <textarea id="description" rows="5" required></textarea>
+            
+            <button type="submit">Добавить</button>
         </form>
     </div>
-
-    <div id="dataContainer"></div>
+    
+    <div class="table-container">
+        <table id="dataTable">
+            <tr>
+                <td class="description">
+                    <a href="gok.html"><h2>Горно-обогатительные комбинаты</h2></a>
+                    <p>Го́рно-обогати́тельный комбина́т (сокращённо ГОК) — комплексное горное предприятие по добыче и переработке твёрдых полезных ископаемых. Необходимость в строительстве на одной производственной площадке производственных переделов не только по добыче, но и по переработке и обогащению добываемых из недр полезных ископаемых, возникла в связи с тем, что для дальнейшего использования полезных ископаемых необходимо повысить в них содержание полезных компонентов.</p>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <script>
-        document.getElementById('dataForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get input values
             const title = document.getElementById('title').value;
+            const link = document.getElementById('link').value;
             const description = document.getElementById('description').value;
-            const imageInput = document.getElementById('image').files[0];
-
-            if (imageInput) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    const image = e.target.result;
-                    const newData = {
-                        title: title,
-                        description: description,
-                        image: image,
-                    };
-
-                    addDataToPage(newData);
-                    saveDataToLocalStorage(newData);
-                    generateHtmlPage(newData);
-                };
-                reader.readAsDataURL(imageInput);
-            }
-        });
-
-        function addDataToPage(data) {
-            const container = document.getElementById('dataContainer');
-            const table = document.createElement('table');
-            table.innerHTML = `
-                <tr>
-                    <td class="image-cell">
-                        <img src="${data.image}" alt="Спутниковый снимок">
-                    </td>
-                    <td class="text-cell">
-                        <h2><a href="${data.title}.html">${data.title}</a></h2>
-                        <p>${data.description}</p>
-                    </td>
-                </tr>
+            
+            // Create new row
+            const table = document.getElementById('dataTable');
+            const newRow = table.insertRow();
+            
+            const newCell = newRow.insertCell();
+            newCell.classList.add('description');
+            
+            const newContent = `
+                <a href="${link}"><h2>${title}</h2></a>
+                <p>${description}</p>
             `;
-            container.appendChild(table);
-        }
-
-        function saveDataToLocalStorage(data) {
-            const existingData = JSON.parse(localStorage.getItem('dataList')) || [];
-            existingData.push(data);
-            localStorage.setItem('dataList', JSON.stringify(existingData));
-        }
-
-        function loadDataFromLocalStorage() {
-            const existingData = JSON.parse(localStorage.getItem('dataList')) || [];
-            existingData.forEach(data => addDataToPage(data));
-        }
-
-        function generateHtmlPage(data) {
-            const pageContent = `
-                <!DOCTYPE html>
-                <html lang="ru">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>${data.title}</title>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 20px;
-                            background-color: #f0f0f0;
-                        }
-                        .container {
-                            width: 100%;
-                            max-width: 800px;
-                            margin: auto;
-                            background: rgba(255, 255, 255, 0.8);
-                            padding: 20px;
-                            border-radius: 8px;
-                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                        }
-                        .image-cell img {
-                            max-width: 100%;
-                            height: auto;
-                            border-radius: 8px;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <h1>${data.title}</h1>
-                        <img src="${data.image}" alt="Спутниковый снимок">
-                        <p>${data.description}</p>
-                    </div>
-                </body>
-                </html>`;
-
-            const link = document.createElement('a');
-            link.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(pageContent);
-            link.download = `${data.title}.html`;
-            link.click();
-        }
-
-        // При загрузке страницы загружаем данные из Local Storage
-        window.onload = function() {
-            loadDataFromLocalStorage();
-        };
+            
+            newCell.innerHTML = newContent;
+            
+            // Clear form
+            document.getElementById('dataForm').reset();
+        });
     </script>
 </body>
 </html>
