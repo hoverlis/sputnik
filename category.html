@@ -285,8 +285,10 @@
             }
 
             // Clear form
-            document.getElementById('dataForm').reset();
         });
+                window.onload = function() {
+            loadDataFromLocalStorage();
+        };
     </script>
 </body>
 <style>
