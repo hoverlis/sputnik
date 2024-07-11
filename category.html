@@ -253,6 +253,20 @@
                     </td>
                 </tr>
             </table>
+        <body>
+    <form id="dataForm">
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="url" id="link" placeholder="Link" required>
+        <textarea id="description" placeholder="Description" required></textarea>
+        <input type="file" id="image" accept="image/*">
+        <button type="submit">Add</button>
+    </form>
+
+    <table id="dataTable">
+        <tr>
+            <th>Description</th>
+        </tr>
+    </table>
 
    <script>
         document.getElementById('dataForm').addEventListener('submit', function(e) {
