@@ -290,6 +290,46 @@
             loadDataFromLocalStorage();
         };
     </script>
+          <script>
+        // Инициализация списка элементов
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadElements();
+        });
+
+        function addElement() {
+            const inputElement = document.getElementById('inputElement');
+            const value = inputElement.value;
+
+            if (value) {
+                const elementList = loadFromLocalStorage('elementList');
+                elementList.push(value);
+                saveToLocalStorage('elementList', elementList);
+                inputElement.value = '';
+                loadElements();
+            }
+        }
+
+        function loadElements() {
+            const data = loadFromLocalStorage('elementList');
+            const elementList = document.getElementById('elementList');
+            elementList.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                elementList.appendChild(li);
+            });
+        }
+
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        }
+    </script>
 </body>
 <style>
     body {
