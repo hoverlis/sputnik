@@ -254,7 +254,7 @@
                 </tr>
             </table>
 
-    <script>
+   <script>
         document.getElementById('dataForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -264,71 +264,71 @@
             const description = document.getElementById('description').value;
             const image = document.getElementById('image').files[0];
 
-            // Create new row
+            // Create a new row object
+            let newRowData = {
+                title: title,
+                link: link,
+                description: description,
+            };
+
+            if (image) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    newRowData.imageData = event.target.result;
+                    saveRowData(newRowData);
+                    appendRow(newRowData);
+                };
+                reader.readAsDataURL(image);
+            } else {
+                saveRowData(newRowData);
+                appendRow(newRowData);
+            }
+
+            // Clear form
+            document.getElementById('dataForm').reset();
+        });
+
+        function appendRow(data) {
             const table = document.getElementById('dataTable');
             const newRow = table.insertRow();
 
             const newCell = newRow.insertCell();
             newCell.classList.add('description');
 
-            let newContent = `<a href="${link}"><h2>${title}</h2></a><p>${description}</p>`;
+            let newContent = `<a href="${data.link}"><h2>${data.title}</h2></a><p>${data.description}</p>`;
 
-            if (image) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    newContent += `<img src="${event.target.result}" alt="${title}" style="max-width:100%;margin-top:10px;">`;
-                    newCell.innerHTML = newContent;
-                };
-                reader.readAsDataURL(image);
-            } else {
-                newCell.innerHTML = newContent;
+            if (data.imageData) {
+                newContent += `<img src="${data.imageData}" alt="${data.title}" style="max-width:100%;margin-top:10px;">`;
             }
 
-            // Clear form
-        });
-                window.onload = function() {
-            loadDataFromLocalStorage();
-        };
-    </script>
-          <script>
-        // Инициализация списка элементов
-        document.addEventListener('DOMContentLoaded', (event) => {
-            loadElements();
-        });
-
-        function addElement() {
-            const inputElement = document.getElementById('inputElement');
-            const value = inputElement.value;
-
-            if (value) {
-                const elementList = loadFromLocalStorage('elementList');
-                elementList.push(value);
-                saveToLocalStorage('elementList', elementList);
-                inputElement.value = '';
-                loadElements();
-            }
+            newCell.innerHTML = newContent;
         }
 
-        function loadElements() {
-            const data = loadFromLocalStorage('elementList');
-            const elementList = document.getElementById('elementList');
-            elementList.innerHTML = '';
-
-            data.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                elementList.appendChild(li);
-            });
-        }
-
-        function saveToLocalStorage(key, data) {
-            localStorage.setItem(key, JSON.stringify(data));
+        function saveRowData(rowData) {
+            let tableData = loadFromLocalStorage('tableData');
+            tableData.push(rowData);
+            saveToLocalStorage('tableData', tableData);
         }
 
         function loadFromLocalStorage(key) {
             const data = localStorage.getItem(key);
             return data ? JSON.parse(data) : [];
         }
+
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function loadDataFromLocalStorage() {
+            const data = loadFromLocalStorage('tableData');
+            data.forEach(row => appendRow(row));
+        }
+
+        // Load data when the page is loaded
+        window.onload = function() {
+            loadDataFromLocalStorage();
+        };
+
     </script>
 </body>
 <style>
