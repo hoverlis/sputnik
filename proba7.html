@@ -1,80 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #f0f0f0;
         }
+
+        .table-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+
         table {
-            width: 90%;
-            background-color: white;
-            margin-top: 20px;
-            border-collapse: collapse; /* Убираем обводку между ячейками */
-        }
-        th, td {
-            padding: 8px;
-            text-align: center; /* Выравниваем текст по центру */
-        }
-        #formTable {
-            width: 80%;
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
             margin-top: 20px;
         }
-        .description img {
-            max-width: 100%;
-            margin-top: 10px;
+
+        td {
+            padding: 20px;
         }
-        button {
+
+        .description {
+            padding: 10px;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container input,
+        .form-container textarea {
             width: 100%;
             padding: 10px;
-            background-color: #007BFF;
-            color: white;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
             border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
             cursor: pointer;
         }
-        button:hover {
+
+        .form-container button:hover {
             background-color: #0056b3;
         }
-        .content-table {
-            margin: 10px;
-            padding: 10px;
-            background-color: white;
-            border: 1px solid #ccc;
+
+        .form-container label[for="image"] {
+            cursor: pointer;
+            display: inline-block;
+            color: #007bff;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <form id="dataForm">
-        <table id="formTable">
-            <tr>
-                <td><label for="title">Заголовок:</label></td>
-                <td><input type="text" id="title" required></td>
-            </tr>
-            <tr>
-                <td><label for="link">Ссылка:</label></td>
-                <td><input type="url" id="link" required></td>
-            </tr>
-            <tr>
-                <td><label for="description">Описание:</label></td>
-                <td><textarea id="description" required></textarea></td>
-            </tr>
-            <tr>
-                <td><label for="image">Изображение:</label></td>
-                <td><input type="file" id="image" accept="image/*"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><button type="submit">Добавить в таблицу</button></td>
-            </tr>
+    <div class="form-container">
+        <h2>Добавить новую запись</h2>
+        <form id="dataForm">
+            <label for="title">Заголовок:</label>
+            <input type="text" id="title" placeholder="Title" required>
+
+            <label for="link">Ссылка:</label>
+            <input type="url" id="link" placeholder="Link" required>
+
+            <label for="description">Описание:</label>
+            <textarea id="description" placeholder="Description" rows="5" required></textarea>
+            
+            <label for="image">Изображение:</label>
+            <input type="file" id="image" accept="image/*">
+
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Описание</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
         </table>
-    </form>
-    <div id="tableContainer">
     </div>
 
     <script>
@@ -154,4 +196,3 @@
 
     </script>
 </body>
-</html>
