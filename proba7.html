@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        table {
+            width: 90%;
+            background-color: white;
+            margin-top: 20px;
+            border-collapse: collapse; /* Убираем обводку между ячейками */
+        }
+        th, td {
+            padding: 8px;
+            text-align: center; /* Выравниваем текст по центру */
+        }
+        #formTable {
+            width: 80%;
+            margin-top: 20px;
+        }
+        .description img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .content-table {
+            margin: 10px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <form id="dataForm">
+        <table id="formTable">
+            <tr>
+                <td><label for="title">Заголовок:</label></td>
+                <td><input type="text" id="title" required></td>
+            </tr>
+            <tr>
+                <td><label for="link">Ссылка:</label></td>
+                <td><input type="url" id="link" required></td>
+            </tr>
+            <tr>
+                <td><label for="description">Описание:</label></td>
+                <td><textarea id="description" required></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="image">Изображение:</label></td>
+                <td><input type="file" id="image" accept="image/*"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Добавить в таблицу</button></td>
+            </tr>
+        </table>
+    </form>
+    <div id="tableContainer">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const dataForm = document.getElementById('dataForm');
+            const tableContainer = document.getElementById('tableContainer');
+
+            // Load any stored data
+            loadStoredData();
+
+            dataForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get input values
+                const title = document.getElementById('title').value;
+                const link = document.getElementById('link').value;
+                const description = document.getElementById('description').value;
+                const image = document.getElementById('image').files[0];
+
+                addRow(title, link, description, image);
+
+                // Clear form
+                document.getElementById('dataForm').reset();
+            });
+
+            function addRow(title, link, description, image, imageUrl = null) {
+                // Create new table
+                const newTable = document.createElement('table');
+                newTable.classList.add('content-table');
+                newTable.innerHTML = `
+                    <tr>
+                        <td class="description">
+                            <a href="${link}"><h2>${title}</h2></a>
+                            <p>${description}</p>
+                        </td>
+                    </tr>
+                `;
+
+                tableContainer.appendChild(newTable);
+
+                let newContent = newTable.querySelector('.description').innerHTML;
+
+                if (image) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        newContent += `<img src="${event.target.result}" alt="${title}">`;
+                        newTable.querySelector('.description').innerHTML = newContent;
+                        saveRow(title, link, description, event.target.result);
+                    };
+                    reader.readAsDataURL(image);
+                } else {
+                    newTable.querySelector('.description').innerHTML = newContent;
+                    saveRow(title, link, description, imageUrl);
+                }
+            }
+
+            function saveRow(title, link, description, imageUrl) {
+                let storedData = JSON.parse(localStorage.getItem('tableData')) || [];
+                storedData.push({ title, link, description, imageUrl });
+                localStorage.setItem('tableData', JSON.stringify(storedData));
+            }
+
+            function loadStoredData() {
+                let storedData = JSON.parse(localStorage.getItem('tableData')) || [];
+                storedData.forEach(row => addRow(row.title, row.link, row.description, null, row.imageUrl));
+            }
+        });
+    </script>
+</body>
+</html>
