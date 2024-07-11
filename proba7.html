@@ -78,70 +78,80 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const dataForm = document.getElementById('dataForm');
-            const tableContainer = document.getElementById('tableContainer');
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            // Load any stored data
-            loadStoredData();
+            // Get input values
+            const title = document.getElementById('title').value;
+            const link = document.getElementById('link').value;
+            const description = document.getElementById('description').value;
+            const image = document.getElementById('image').files[0];
 
-            dataForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+            // Create a new row object
+            let newRowData = {
+                title: title,
+                link: link,
+                description: description,
+            };
 
-                // Get input values
-                const title = document.getElementById('title').value;
-                const link = document.getElementById('link').value;
-                const description = document.getElementById('description').value;
-                const image = document.getElementById('image').files[0];
-
-                addRow(title, link, description, image);
-
-                // Clear form
-                document.getElementById('dataForm').reset();
-            });
-
-            function addRow(title, link, description, image, imageUrl = null) {
-                // Create new table
-                const newTable = document.createElement('table');
-                newTable.classList.add('content-table');
-                newTable.innerHTML = `
-                    <tr>
-                        <td class="description">
-                            <a href="${link}"><h2>${title}</h2></a>
-                            <p>${description}</p>
-                        </td>
-                    </tr>
-                `;
-
-                tableContainer.appendChild(newTable);
-
-                let newContent = newTable.querySelector('.description').innerHTML;
-
-                if (image) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        newContent += `<img src="${event.target.result}" alt="${title}">`;
-                        newTable.querySelector('.description').innerHTML = newContent;
-                        saveRow(title, link, description, event.target.result);
-                    };
-                    reader.readAsDataURL(image);
-                } else {
-                    newTable.querySelector('.description').innerHTML = newContent;
-                    saveRow(title, link, description, imageUrl);
-                }
+            if (image) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    newRowData.imageData = event.target.result;
+                    saveRowData(newRowData);
+                    appendRow(newRowData); 
+                };
+                reader.readAsDataURL(image);
+            } else {
+                saveRowData(newRowData);
+                appendRow(newRowData); 
             }
 
-            function saveRow(title, link, description, imageUrl) {
-                let storedData = JSON.parse(localStorage.getItem('tableData')) || [];
-                storedData.push({ title, link, description, imageUrl });
-                localStorage.setItem('tableData', JSON.stringify(storedData));
-            }
-
-            function loadStoredData() {
-                let storedData = JSON.parse(localStorage.getItem('tableData')) || [];
-                storedData.forEach(row => addRow(row.title, row.link, row.description, null, row.imageUrl));
-            }
+            // Clear form
+            document.getElementById('dataForm').reset();
         });
+
+        function appendRow(data) {
+            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const newCell = newRow.insertCell();
+            newCell.classList.add('description');
+
+            let newContent = `<a href="${data.link}"><h2>${data.title}</h2></a><p>${data.description}</p>`;
+
+            if (data.imageData) {
+                newContent += `<img src="${data.imageData}" alt="${data.title}" style="max-width:100%;margin-top:10px;">`;
+            }
+
+            newCell.innerHTML = newContent;
+        }
+
+        function saveRowData(rowData) {
+            let tableData = loadFromLocalStorage('tableData');
+            tableData.push(rowData);
+            saveToLocalStorage('tableData', tableData);
+        }
+
+        function loadFromLocalStorage(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function loadDataFromLocalStorage() {
+            const data = loadFromLocalStorage('tableData');
+            data.forEach(row => appendRow(row));
+        }
+
+        // Load data when the page is loaded
+        window.onload = function() {
+            loadDataFromLocalStorage(); 
+        };
+
     </script>
 </body>
 </html>
