@@ -84,8 +84,26 @@
     <div class="header">
         <h1>Каталог эталонов дешифрования спутниковых снимков для экологических задач</h1>
     </div>
+    
     <center><h1>Горно-обогатительные комбинаты</h1></center>
+ <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.carousel img');
 
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.style.transform = `translateX(-${index * 100}%)`;
+            });
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+
+        setInterval(nextImage, 2000); // смена каждые 2 секунды
+    </script>
+</body>
     <div>  
 
     <div class="catalog">
@@ -111,11 +129,44 @@
             <img src="GOK_Gaisky.png" alt="Спутниковый снимок Гайский горно-обогатительный комбинат">
         </div>
         <div class="catalog-item">
-            <h2>Инаглинский горно-обогатительный комбинат</h2>
-            <p>Крупнейший угледобывающий комплекс на территории России. Располагается в Нерюнгринском районе Республики Саха (Якутия).
-                <br/>
-                <br/> 56°42'59"N 124°42'17"E</p>
-            <img src="GOK_Inaglinsky.png" alt="Спутниковый снимок Инаглинский горно-обогатительный комбинат">
+            <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .catalog-item {
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+        }
+        .carousel img {
+            min-width: 100%;
+            transition: 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="catalog-item">
+        <h2>Инаглинский горно-обогатительный комбинат</h2>
+        <p>Крупнейший угледобывающий комплекс на территории России. Располагается в Нерюнгринском районе Республики Саха (Якутия).
+            <br/><br/> 56°42'59"N 124°42'17"E
+        </p>
+        <div class="carousel">
+            <img src="GOK_Inaglinsky1.png" alt="Спутниковый снимок 1">
+            <img src="GOK_Inaglinsky2.png" alt="Спутниковый снимок 2">
+            <img src="GOK_Inaglinsky3.png" alt="Спутниковый снимок 3">
+        </div>
+    </div>
+
         </div>
         <div class="catalog-item">
             <h2>Медногорский медно-серный комбинат</h2>
